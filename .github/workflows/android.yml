@@ -1,6 +1,4 @@
 name: Build ENERGIA Android      if-no-files-found: error
-name: Build ENERGIA Android
-
 on:
   workflow_dispatch:
 
