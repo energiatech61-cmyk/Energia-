@@ -1,3 +1,4 @@
+name: Build ENERGIA Android      if-no-files-found: error
 name: Build ENERGIA Android
 
 on:
@@ -8,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download source code
+      - name: Checkout Energia
         uses: actions/checkout@v4
 
-      - name: Setup Java 17
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -21,17 +22,15 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android SDK packages
+      - name: Install Android SDK
         run: |
           sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
-      - name: Make Gradle executable
+      - name: Build ENERGIA APK
         working-directory: android
-        run: chmod +x gradlew
-
-      - name: Build Android APK
-        working-directory: android
-        run: ./gradlew assembleDebug --stacktrace
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
 
       - name: Upload ENERGIA APK
         uses: actions/upload-artifact@v4
